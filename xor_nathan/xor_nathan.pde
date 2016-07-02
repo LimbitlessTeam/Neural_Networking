@@ -10,26 +10,26 @@
 ArrayList inputs;  // List of training input values
 Network nn;        // Neural Network Object
 int count;         // Total training interations
-Landscape land;    // Solution space
+//Landscape land;    // Solution space
 float theta = 0.0; // Angle of rotation
 PFont f;           // Font
 
 
 void setup() {
-
-  size(900, 700, P3D);
+  frameRate(60);
+  size(900, 700);
   println("stuff");
 
   // Create a landscape object
   println("why");
 
 
-  land = new Landscape(20, 300, 300); //<>//
+//  land = new Landscape(20, 300, 300);
 
 
   f = createFont("Courier", 12, true);
 
-  nn = new Network(2, 4, 1);
+  nn = new Network(10,10,4);
 
   // Create a list of 4 training inputs
   inputs = new ArrayList();
@@ -68,8 +68,8 @@ void draw() {
     count++;
   }
 
-
-  // Ok, visualize the solution space
+  background(175);
+ /* // Ok, visualize the solution space
   background(175);
   pushMatrix();
   translate(width/5, height/5+20, -160);
@@ -82,16 +82,16 @@ void draw() {
   noFill();
   translate(-10, -10, 0);
   box(280);
-
-  // Draw the landscape
+*/
+/*  // Draw the landscape
   popMatrix();
   land.calculate(nn);
   land.render(); 
   theta += 0.0025;
   popMatrix();
-
+*/
   // Display overal neural net stats
-  networkStatus();
+//  networkStatus();
   
   
     //nathan edits
@@ -99,27 +99,65 @@ void draw() {
  // rectMode(CENTER);
   fill(0,0,0);
   //nodes
-  for(int i=0;i<nn.input.length;i++){
-      for(int j=0;j<nn.hidden.length;j++){
+  
+  
+
+  for(int i=0;i<nn.input.length-1;i++){
+      for(int j=0;j<nn.hidden.length-1;j++){
           for(int k=0;k<nn.output.length;k++){
-  ellipse(3*width/6,height/nn.input.length+i*100,20,20);
+         //input node positions based on array length   
+         float inputX=1*width/4;
+         float inputY=i*(height/nn.input.length)+(height/nn.input.length);
+         float inputNode = 100/log(nn.input.length);
+         //hidden node positions based on array length(length-1?)
+         float hiddenX=2*width/4;
+         float hiddenY=j*(height/nn.hidden.length)+(height/nn.hidden.length);
+         float hiddenNode = 100/log(nn.hidden.length);
+         //output node positions based on array length 
+         float outputX=3*width/4;
+         float outputY=k*(height/nn.output.length)+(height/nn.output.length)/2;
+         float outputNode = 100/log(nn.output.length);
+         println("THE OUTPUT NODE SIZE IS:");
+         println(100/log(nn.output.length));
+     //need quick check bc if a node list == 1 then log(1)=0 and size of that node will be 0, reset to some medium size   
+        if(inputNode==100/log(1)){
+        inputNode=100;
+        }
+        if(hiddenNode==100/log(1)){
+        hiddenNode=100;
+        }
+        if(outputNode==100/log(1)){
+        outputNode=100;
+        }        
 
-  ellipse(4*width/6,height/nn.hidden.length+j*100,20,20);
+        
+   fill(177,0,240);
+   strokeWeight(1.5);
+   stroke(0);
+   
+   
+  //create line from input to hidden nodes
+  line(inputX,inputY,hiddenX,hiddenY);
+  //create line from hidden to output nodes
+  line(hiddenX,hiddenY,outputX,outputY);
+
+  //draw input nodes       
+  ellipse(inputX,inputY,inputNode,inputNode);
+  //draw hidden nodes
+  ellipse(hiddenX,hiddenY,hiddenNode,hiddenNode);
+  //draw ouput nodes
+  ellipse(outputX,outputY,outputNode,outputNode);
+  //create line thickness
+
+
   
-
-  if(nn.output.length+i*100>1){  
-  ellipse(5*width/6,height/nn.output.length+i*100,20,20);
-  }else{
-  ellipse(5*width/6,height/nn.output.length/2,20,20);
-  }
-  stroke(15);
-  line(3*width/6,height/nn.input.length+i*100,4*width/6,height/nn.hidden.length+j*100);
-  line(4*width/6,height/nn.hidden.length+j*100,5*width/6,height/nn.output.length/2);
   
-    }
-  }
-}
+  
+    }//
+  }//
+}//end of triple for loop
 
+//end of draw
 }
 
 void networkStatus() {
