@@ -67,20 +67,11 @@ public class Network {
     println("made it here");
     // Connect the hidden layer to the output neuron
     for (int i = 0; i < hidden.length; i++) {
-      println("before");
-      for (int j = 0; j < output.length; i++)
+      for (int j = 0; j < output.length; j++)
       {
-        println("or here"); //<>//
-        println(hidden.length);
-        println(output.length);
-        println("i; " +i);
-        println("j: " +j);
-        Connection c = new Connection(hidden[i], output[j]); //<>//
-        println("first");
+        Connection c = new Connection(hidden[i], output[j]);
         hidden[i].addConnection(c);
-        println("sec");
         output[j].addConnection(c);
-        println("thr");
       }
     }
   }

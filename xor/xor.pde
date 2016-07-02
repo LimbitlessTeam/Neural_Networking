@@ -24,7 +24,7 @@ void setup() {
   println("why");
 
 
-  land = new Landscape(20, 300, 300); //<>//
+  land = new Landscape(20, 300, 300);
 
 
   f = createFont("Courier", 12, true);
@@ -61,7 +61,7 @@ void draw() {
     float[] known = {1};
     if ((inp[0] == 1.0 && inp[1] == 1.0) || (inp[0] == 0 && inp[1] == 0)) 
     {
-      known[0] = 1;
+      known[0] = 0;
     }
     // Train that sucker!
     float[] result = nn.train(inp, known);
